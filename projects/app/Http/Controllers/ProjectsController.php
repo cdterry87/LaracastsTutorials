@@ -29,6 +29,13 @@ class ProjectsController extends Controller
         return view('projects.create');
     }
 
+    public function validation() {
+        return request()->validate([
+            'title' => ['required', 'min:3', 'max:255'],
+            'description' => ['required', 'min:3', 'max:255']
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -37,6 +44,12 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
+        // request()->validate([
+        //     'title' => ['required', 'min:3', 'max:255'],
+        //     'description' => ['required', 'min:3', 'max:255']
+        // ]);
+        $this->validation();
+
         Project::create(request()->all());
 
         return redirect('/projects');
