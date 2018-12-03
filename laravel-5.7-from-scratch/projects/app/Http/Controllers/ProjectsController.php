@@ -7,6 +7,11 @@ use \App\Project;
 
 class ProjectsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +34,8 @@ class ProjectsController extends Controller
         return view('projects.create');
     }
 
-    public function validation() {
+    public function validation()
+    {
         return request()->validate([
             'title' => ['required', 'min:3', 'max:255'],
             'description' => ['required', 'min:3', 'max:255']
@@ -44,13 +50,11 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        // request()->validate([
-        //     'title' => ['required', 'min:3', 'max:255'],
-        //     'description' => ['required', 'min:3', 'max:255']
-        // ]);
-        $this->validation();
+        $attributes = $this->validation();
 
-        Project::create(request()->all());
+        $attributes['owner_id'] = auth()->id();
+
+        Project::create($attributes);
 
         return redirect('/projects');
     }
@@ -63,6 +67,7 @@ class ProjectsController extends Controller
      */
     public function show(Project $project)
     {
+
         return view('projects.show', compact('project'));
     }
 
