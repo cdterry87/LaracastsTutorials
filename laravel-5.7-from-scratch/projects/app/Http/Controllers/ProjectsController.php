@@ -19,7 +19,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = auth()->user()->projects;
 
         return view('projects.index', compact('projects'));
     }
@@ -101,7 +101,9 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $project->update(request()->all());
+        $attributes = $this->validation();
+
+        $project->update($attributes);
 
         return redirect('/projects');
     }
