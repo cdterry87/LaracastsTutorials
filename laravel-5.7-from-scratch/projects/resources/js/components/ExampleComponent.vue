@@ -3,11 +3,14 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card card-default">
-                    <div class="card-header">Example Component</div>
+                    <div class="card-header" v-text="name"></div>
 
-                    <div class="card-body">
-                        I'm an example component.
+                    <div class="card-body" v-text="desc">
+
                     </div>
+                </div>
+                <div>
+                    {{ test }}
                 </div>
             </div>
         </div>
@@ -16,8 +19,20 @@
 
 <script>
     export default {
+        data() {
+            return {
+                name: 'Laracasts',
+                desc: 'The best Laravel tutorials!',
+                test: 'testing a new variable'
+            }
+        },
         mounted() {
             console.log('Component mounted.')
         }
     }
 </script>
+
+<style scoped>
+    .card {background: pink;}
+</style>
+
