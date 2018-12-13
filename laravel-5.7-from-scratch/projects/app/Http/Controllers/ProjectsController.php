@@ -60,7 +60,9 @@ class ProjectsController extends Controller
         // This is now in the Project model as a $dispatchesEvent
         // event(new ProjectCreated($project));
 
-        return redirect('/projects');
+        // session()->flash('message', 'Your project has been created');
+
+        return redirect('/projects')->with('message', 'Your project has been created!!!');
     }
 
     /**

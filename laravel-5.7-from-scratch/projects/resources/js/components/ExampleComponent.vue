@@ -9,9 +9,6 @@
 
                     </div>
                 </div>
-                <div>
-                    {{ test }}
-                </div>
             </div>
         </div>
     </div>
@@ -23,7 +20,6 @@
             return {
                 name: 'Laracasts',
                 desc: 'The best Laravel tutorials!',
-                test: 'testing a new variable'
             }
         },
         mounted() {
