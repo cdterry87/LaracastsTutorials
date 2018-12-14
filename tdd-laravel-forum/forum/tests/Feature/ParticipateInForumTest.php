@@ -35,4 +35,19 @@ class ParticipateInForumTest extends TestCase
         //Check to see if the reply shows up on the thread.
         $this->get($thread->path())->assertSee($reply->body);
     }
+
+    /** @test */
+    function a_reply_requires_a_body()
+    {
+        $this->signIn();
+
+        // Create a thread.
+        $thread = create('App\Thread');
+
+        // Create a reply and tie it to the thread.
+        $reply = make('App\Reply', ['body' => null]);
+
+        $this->post($thread->path() . '/replies', $reply->toArray())
+            ->assertSessionHasErrors('body');
+    }
 }
