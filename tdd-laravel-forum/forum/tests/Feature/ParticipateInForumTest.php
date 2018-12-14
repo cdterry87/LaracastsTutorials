@@ -15,7 +15,8 @@ class ParticipateInForumTest extends TestCase
         $this->expectException('\Illuminate\Auth\AuthenticationException');
         $this->withoutExceptionHandling();
 
-        $this->post('/threads/1/replies', []);
+        $this->post('/threads/some-channel/1/replies', [])
+            ->assertRedirect('/login');
     }
 
     /** @test */
@@ -25,13 +26,13 @@ class ParticipateInForumTest extends TestCase
         $this->be($user = factory('App\User')->create());
 
         // Create a thread.
-        $thread = factory('App\Thread')->create();
+        $thread = create('App\Thread');
 
         // Create a reply and tie it to the thread.
-        $reply = factory('App\Reply')->make();
-        $this->post('/threads/' . $thread->id . '/replies', $reply->toArray());
+        $reply = make('App\Reply');
+        $this->post($thread->path() . '/replies', $reply->toArray());
 
         //Check to see if the reply shows up on the thread.
-        $this->get('/threads/' . $thread->id)->assertSee($reply->body);
+        $this->get($thread->path())->assertSee($reply->body);
     }
 }
